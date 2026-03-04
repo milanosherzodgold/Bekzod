@@ -14,7 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("mongodb+srv://milanosherzodgold_db_user:Sherzod7$@cluster0.ftuoneb.mongodb.net/?appName=Cluster0")
 db = client["sklad_db"]
 
 products = db["products"]
@@ -203,4 +203,5 @@ def report_monthly(year: int, month: int):
         "cost": a["cost"],
         "profit": a["profit"],
         "salesCount": a["count"]
+
     }
