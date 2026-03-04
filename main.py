@@ -1,11 +1,17 @@
+import os
+from datetime import datetime
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pymongo import MongoClient
 from bson import ObjectId
-from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
+# CORS (Telegram/GitHub Pages uchun)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,14 +20,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = MongoClient("mongodb+srv://milanosherzodgold_db_user:Sherzod7$@cluster0.ftuoneb.mongodb.net/?appName=Cluster0")
-db = client["sklad_db"]
+# Mongo ENV
+MONGO_URL = os.getenv("MONGO_URL") or "mongodb://localhost:27017/"
+DB_NAME = os.getenv("DB_NAME", "sklad_db")
+
+client = MongoClient(MONGO_URL)
+db = client[DB_NAME]
 
 products = db["products"]
 sales = db["sales"]
 
 
-def oid(x):  # str -> ObjectId
+def oid(x: str) -> ObjectId:
     return ObjectId(x)
 
 
@@ -30,6 +40,9 @@ def home():
     return {"message": "Sklad backend ishlayapti"}
 
 
+# ======================
+# PRODUCTS
+# ======================
 @app.get("/products")
 def get_products():
     data = []
@@ -41,11 +54,12 @@ def get_products():
 
 @app.post("/products")
 def add_product(product: dict):
-    # defaultlar
+    # default qiymatlar
     product.setdefault("stockQty", 0)
     product.setdefault("averageCost", 0)
     product.setdefault("sellPrice", 0)
     product.setdefault("isActive", True)
+
     products.insert_one(product)
     return {"status": "product added"}
 
@@ -63,6 +77,9 @@ def delete_product(product_id: str):
     return {"status": "product deleted"}
 
 
+# ======================
+# STOCK IN (KIRIM)
+# ======================
 @app.post("/stock-in")
 def stock_in(payload: dict):
     """
@@ -88,7 +105,6 @@ def stock_in(payload: dict):
         old_cost = float(p.get("averageCost", 0))
 
         new_qty = old_qty + qty
-        # average cost update
         if new_qty > 0:
             new_cost = ((old_qty * old_cost) + (qty * buy_price)) / new_qty
         else:
@@ -102,6 +118,9 @@ def stock_in(payload: dict):
     return {"status": "stock-in confirmed", "at": now.isoformat()}
 
 
+# ======================
+# SALES (SOTUV)
+# ======================
 @app.post("/sales")
 def create_sale(payload: dict):
     """
@@ -171,14 +190,13 @@ def create_sale(payload: dict):
     return {"status": "sale created", "saleId": str(res.inserted_id), "totals": doc}
 
 
+# ======================
+# REPORTS
+# ======================
 @app.get("/reports/monthly")
 def report_monthly(year: int, month: int):
-    # month: 1..12
     start = datetime(year, month, 1)
-    if month == 12:
-        end = datetime(year + 1, 1, 1)
-    else:
-        end = datetime(year, month + 1, 1)
+    end = datetime(year + 1, 1, 1) if month == 12 else datetime(year, month + 1, 1)
 
     pipeline = [
         {"$match": {"date": {"$gte": start, "$lt": end}}},
@@ -203,5 +221,4 @@ def report_monthly(year: int, month: int):
         "cost": a["cost"],
         "profit": a["profit"],
         "salesCount": a["count"]
-
     }
