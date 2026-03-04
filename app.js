@@ -1,5 +1,5 @@
 // Backend URL
-const API = "8678474682:AAHV1htJxlsx3vNBUZ0kGvKJhgDjKKnhG2w";
+const API = "https://SIZNING-RENDER-NOMI.onrender.com";
 
 const el = (id) => document.getElementById(id);
 const money = (n) => (Number(n || 0)).toLocaleString("uz-UZ");
@@ -194,3 +194,4 @@ async function main() {
 
 
 main();
+
