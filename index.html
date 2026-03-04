@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkladMag</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="top">
+    <div>
+      <div class="title">SkladMag</div>
+      <div class="sub" id="tgUser">Telegram: —</div>
+    </div>
+    <div class="pill" id="apiStatus">API: —</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="products">Mahsulot</button>
+    <button class="tab" data-tab="stockin">Kirim</button>
+    <button class="tab" data-tab="sale">Sotuv</button>
+    <button class="tab" data-tab="reports">Hisobot</button>
+  </nav>
+
+  <main class="wrap">
+    <!-- PRODUCTS -->
+    <section class="card" id="tab-products">
+      <div class="row between">
+        <h2>Mahsulotlar</h2>
+        <button class="btn" id="btnRefresh">Yangilash</button>
+      </div>
+
+      <div class="row gap">
+        <input class="input" id="pName" placeholder="Nomi (masalan: Coca-Cola)" />
+        <input class="input" id="pSell" type="number" placeholder="Sotish narxi" />
+        <button class="btn primary" id="btnAddProduct">+ Qo‘shish</button>
+      </div>
+
+      <div class="list" id="productsList"></div>
+    </section>
+
+    <!-- STOCK IN -->
+    <section class="card hidden" id="tab-stockin">
+      <h2>Kirim</h2>
+      <div class="hint">Kirim qilish: mahsulotni tanlang, miqdor va kirim narx kiriting.</div>
+
+      <div class="row gap">
+        <select class="input" id="inProduct"></select>
+        <input class="input" id="inQty" type="number" placeholder="Miqdor" />
+        <input class="input" id="inBuy" type="number" placeholder="Kirim narxi" />
+        <button class="btn primary" id="btnStockIn">Kirim tasdiq</button>
+      </div>
+
+      <div class="hint" id="inResult"></div>
+    </section>
+
+    <!-- SALE -->
+    <section class="card hidden" id="tab-sale">
+      <h2>Sotuv</h2>
+      <div class="hint">Sotuv qilish: mahsulot tanlang, miqdor va sotish narxi.</div>
+
+      <div class="row gap">
+        <select class="input" id="saleProduct"></select>
+        <input class="input" id="saleQty" type="number" placeholder="Miqdor" />
+        <input class="input" id="salePrice" type="number" placeholder="Sotish narxi" />
+        <button class="btn primary" id="btnSale">Sotuv tasdiq</button>
+      </div>
+
+      <div class="hint" id="saleResult"></div>
+    </section>
+
+    <!-- REPORTS -->
+    <section class="card hidden" id="tab-reports">
+      <h2>Oylik hisobot</h2>
+      <div class="row gap">
+        <input class="input" id="repYear" type="number" placeholder="Yil (2026)" />
+        <input class="input" id="repMonth" type="number" placeholder="Oy (1-12)" />
+        <button class="btn primary" id="btnReport">Ko‘rish</button>
+      </div>
+
+      <div class="grid" id="reportBox">
+        <div class="kpi"><div class="k">Tushum</div><div class="v" id="kRevenue">—</div></div>
+        <div class="kpi"><div class="k">Tannarx</div><div class="v" id="kCost">—</div></div>
+        <div class="kpi"><div class="k">Foyda</div><div class="v" id="kProfit">—</div></div>
+        <div class="kpi"><div class="k">Sotuv soni</div><div class="v" id="kCount">—</div></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
