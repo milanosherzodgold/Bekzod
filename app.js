@@ -1,5 +1,5 @@
 // Backend URL
-const API = "https://mini-sklad-backend.onrender.com";
+const API = "https://bekzod-0udu.onrender.com";
 
 const el = (id) => document.getElementById(id);
 const money = (n) => (Number(n || 0)).toLocaleString("uz-UZ");
@@ -194,5 +194,6 @@ async function main() {
 
 
 main();
+
 
 
