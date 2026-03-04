@@ -1,5 +1,5 @@
 // Backend URL
-const API = "https://bekzod-1.onrender.com";
+const API = "https://bekzod-1.onrender.com/";
 
 const el = (id) => document.getElementById(id);
 const money = (n) => (Number(n || 0)).toLocaleString("uz-UZ");
@@ -194,6 +194,7 @@ async function main() {
 
 
 main();
+
 
 
 
