@@ -1,5 +1,5 @@
 // Backend URL
-const API = "http://127.0.0.1:8000";
+const API = "8678474682:AAHV1htJxlsx3vNBUZ0kGvKJhgDjKKnhG2w";
 
 const el = (id) => document.getElementById(id);
 const money = (n) => (Number(n || 0)).toLocaleString("uz-UZ");
@@ -191,5 +191,6 @@ async function main() {
     el("kCount").textContent = r.salesCount ?? 0;
   });
 }
+
 
 main();
