@@ -21,7 +21,7 @@ app.add_middleware(
 )
 
 # Mongo ENV
-MONGO_URL = os.getenv("MONGO_URL") or "mongodb://localhost:27017/"
+MONGO_URL = os.getenv("MONGO_URL") or "mongodb+srv://milanosherzodgold_db_user:Sherzod7$@cluster0.ftuoneb.mongodb.net/?appName=Cluster0"
 DB_NAME = os.getenv("DB_NAME", "sklad_db")
 
 client = MongoClient(MONGO_URL)
@@ -222,3 +222,4 @@ def report_monthly(year: int, month: int):
         "profit": a["profit"],
         "salesCount": a["count"]
     }
+
